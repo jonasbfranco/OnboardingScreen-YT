@@ -1,0 +1,22 @@
+react-native-app-intro-slider
+https://www.npmjs.com/package/react-native-app-intro-slider
+
+react-native-onboarding-swiper
+https://www.npmjs.com/package/react-native-onboarding-swiper
+
+
+npx create-expo-app --template
+
+cd OnboardingScreen-YT
+
+expo start --clear --tunnel
+
+https://reactnavigation.org/docs/getting-started
+yarn add @react-navigation/native
+npx expo install react-native-screens react-native-safe-area-context
+yarn add @react-navigation/native-stack
+yarn add react-native-app-intro-slider
+yarn add react-native-svg
+yarn add react-native-svg-transformer
+npx expo install @react-native-async-storage/async-storage
+npx expo install expo-linear-gradient

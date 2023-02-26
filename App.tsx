@@ -1,20 +1,64 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function App() {
+import { Home, Onboarding } from './src/pages';
+
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+
+  const [isFirstLaunch, setIsFirstLaunch] = useState(false);
+
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('@alreadyLaunched')
+  //     if(value === null) {
+  //       AsyncStorage.setItem('@alreadyLaunched', 'true')
+  //       setIsFirstLaunch(true)
+  //     } else {
+  //       setIsFirstLaunch(false)
+  //     }
+  //   } catch(e) {
+  //     console.log(e)
+  //   }
+  // }
+
+  useEffect(() => {
+
+    async function firstLaunched() {
+      await AsyncStorage.getItem('@alreadyLaunched').then((value) => {
+        if(value === null) {
+          AsyncStorage.setItem('@alreadyLaunched', 'true')
+          setIsFirstLaunch(true)
+        } else {
+          setIsFirstLaunch(false)
+        }
+      });
+    }
+    
+  },[]);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {isFirstLaunch && (
+          <Stack.Screen 
+            options={{headerShown: false}} 
+            name="Onboarding" 
+            component={Onboarding} 
+          />
+        )}
+        <Stack.Screen 
+          options={{headerShown: false}} 
+          name="Home" 
+          component={Home} 
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
